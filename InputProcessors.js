@@ -24,7 +24,7 @@ class SpaceShipController extends InputProcessor {
 
                     if (keys.has("j")) {
                         if (obj.reload < 0) {
-                            obj.reload = 50;
+                            obj.reload = 10;
                             toPush.push(
                                 new Bullet(
                                     obj.x + Math.sin(obj.rotate) * obj.radius * 2,
