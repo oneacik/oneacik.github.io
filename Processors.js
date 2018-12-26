@@ -70,37 +70,18 @@ class ReloadProcessor extends Processor {
     }
 }
 
-class MeteorSplitProcessor extends Processor {
+
+class ShipDeathProcessor extends Processor {
     process(actors) {
-        return actors
-            .flatMap(x => {
-                if (x instanceof Meteor && x.hp < 0) {
-                    return [
-                        new Meteor(x.x, x.y, MeteorSplitProcessor.getRandomRotate()),
-                        new Meteor(x.x, x.y, MeteorSplitProcessor.getRandomRotate())
-                    ]
-                } else {
-                    return [x];
-                }
-            });
-    }
-
-    static getRandomRotate() {
-        return Math.random() * 2 * Math.PI;
+        return actors.filter(x => !(x instanceof SpaceShip && x.hp < 0));
     }
 }
 
-class ShipDeathProcessor extends Processor{
-    process(actors){
-        return actors.filter(x => !(x instanceof SpaceShip && x.hp<0));
-    }
-}
-
-class InvulDecreaser extends Processor{
-    process(actors){
-        return actors.map(x=>{
-            if(x.invul !=null){
-                if (x.invul>0){
+class InvulDecreaser extends Processor {
+    process(actors) {
+        return actors.map(x => {
+            if (x.invul != null) {
+                if (x.invul > 0) {
                     x.invul--;
                 }
             }

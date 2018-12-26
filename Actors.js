@@ -40,6 +40,13 @@ class Meteor extends BaseObject {
         this.hp = 1;
         this.setAllColors("#4edaff");
     }
+
+}
+
+class ExplodingMeteor extends Meteor {
+    constructor(x,y, rotate){
+        super(x,y,rotate)
+    }
 }
 
 class Score extends BaseObject {
