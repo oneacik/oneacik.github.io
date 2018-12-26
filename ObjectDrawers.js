@@ -7,13 +7,13 @@ class SpaceShipDrawer extends Drawer {
                     var context = canvas.getContext('2d');
                     if (ship.invul > 0) {
                         if(Ticker.i%20 > 10){
-                            context.strokeStyle = "#FF0000";
+                            context.strokeStyle = "#FF2222";
                         }else{
-                            context.strokeStyle = "#0000FF";
+                            context.strokeStyle = "#2222FF";
                         }
 
                     } else {
-                        context.strokeStyle = "#000000";
+                        context.strokeStyle = "#FFFFFF";
                     }
 
                     context.beginPath();
@@ -21,6 +21,8 @@ class SpaceShipDrawer extends Drawer {
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 2.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 2.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 4.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 4.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));
+                    context.shadowColor = context.strokeStyle;
+                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -39,6 +41,8 @@ class BulletDrawer extends Drawer {
                     context.strokeStyle = "#FF0000";
                     context.beginPath();
                     context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
+                    context.shadowColor = context.strokeStyle;
+                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -56,6 +60,8 @@ class MeteorDrawer extends Drawer {
                     context.strokeStyle = "#4edaff";
                     context.beginPath();
                     context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
+                    context.shadowColor = context.strokeStyle;
+                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -85,6 +91,7 @@ class HpDrawer extends Drawer {
                         context.lineTo(beginX + (size + pad) * i + size, beginY + size);
                         context.lineTo(beginX + (size + pad) * i, beginY + size);
                         context.lineTo(beginX + (size + pad) * i, beginY);
+                        context.shadowColor = "transparent";
                         context.stroke();
                     }
                 }
@@ -105,6 +112,7 @@ class ScoreDrawer extends Drawer {
                 var ctx = canvas.getContext("2d");
                 ctx.textAlign = "right";
                 ctx.font = "10px Arial";
+                ctx.fillStyle = "white"
                 ctx.fillText("Score: " + x.getScore(), beginX, beginY);
             });
 

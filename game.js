@@ -84,7 +84,9 @@ class Scene extends BaseScene {
 
     clearCanvas(canvas) {
         var context = canvas.getContext('2d');
+        context.fillStyle = "black";
         context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
 
