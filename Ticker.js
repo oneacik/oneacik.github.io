@@ -10,3 +10,4 @@ class Ticker{
 
 Ticker.i = 0;
 
+//Łucja kocham Cię wróć do mnie xD
