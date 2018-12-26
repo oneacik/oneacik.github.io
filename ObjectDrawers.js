@@ -103,18 +103,39 @@ class HpDrawer extends Drawer {
 
 class ScoreDrawer extends Drawer {
     draw(canvas, actors) {
-        actors
-            .filter(x => x instanceof Score)
-            .forEach(x => {
-                var beginX = canvas.width - 10;
-                var beginY = canvas.height - 20;
+        var beginX = canvas.width - 10;
+        var beginY = canvas.height - 20;
 
-                var ctx = canvas.getContext("2d");
-                ctx.textAlign = "right";
-                ctx.font = "10px Arial";
-                ctx.fillStyle = "white"
-                ctx.fillText("Score: " + x.getScore(), beginX, beginY);
-            });
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "white"
+        ctx.textAlign = "right";
+        ctx.font = "10px Arial";
+        ctx.fillText("Score: " + Score.getScore(), beginX, beginY);
+
+        return actors;
+    }
+}
+
+class SieNieZesrajDrawer extends Drawer {
+    draw(canvas, actors) {
+        if (actors.find(x => x instanceof SpaceShip) === undefined) {
+            var beginX = canvas.width / 2;
+            var beginY = canvas.height / 2;
+
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = "white"
+            ctx.textAlign = "center";
+            ctx.font = "40px Arial";
+            if (Score.getScore() > 10000) {
+                ctx.fillText("Tylko Się Nię Zesraj", beginX, beginY);
+                ctx.font = "20px Arial";
+                ctx.fillText("By pominąć uwagę naciśnij f.", beginX, beginY*3/2);
+            }else{
+                ctx.fillText("Co Za Przegryw", beginX, beginY);
+                ctx.font = "20px Arial";
+                ctx.fillText("Press f by być przegrywem dalej.", beginX, beginY*3/2);
+            }
+        }
 
         return actors;
     }
