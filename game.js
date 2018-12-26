@@ -49,7 +49,6 @@ class Scene extends BaseScene {
     }
 
     keydown(key) {
-        console.debug(key);
         this.keys.add(key);
     }
 
