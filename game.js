@@ -4,33 +4,6 @@ class Scene extends BaseScene {
         this.keys = new Set();
         this.actors = AgainController.toNigdySieNieKonczy(this.getCanvas());
 
-        this.spaceShipDrawer = new SpaceShipDrawer();
-        this.bulletDrawer = new BulletDrawer();
-        this.meteorDrawer = new MeteorDrawer();
-
-        this.hpDrawer = new HpDrawer();
-        this.scoreDrawer = new ScoreDrawer();
-        this.sieNieZesrajDrawer = new SieNieZesrajDrawer();
-
-        this.linearMovementProcessor = new LinearMovementProcessor();
-        this.angleMovementProcessor = new AngleMovementProcessor();
-        this.positionProcessor = new PositionProcessor();
-
-        this.bulletToAnythingHitProcessor = new BulletToAnythingHitProcessor();
-        this.spaceShipToBulletHitProcessor = new InvulernableHitProcessorDecorator(new SpaceShipToAnythingHitProcessor());
-        this.meteorToBulletHitProcessor = new MeteorToBulletHitProcessor();
-
-        this.deathProcessor = new DeathProcessor();
-        this.spaceShipDeathProcessor = new ShipDeathProcessor();
-        this.ttlProcessor = new TtlProcessor();
-        this.meteorSplitProcessor = new MeteorSplitProcessor();
-
-        this.spaceShipController = new SpaceShipController();
-        this.reloadProcessor = new ReloadProcessor();
-        this.invulDecreaser = new InvulDecreaser();
-
-        this.againController = new AgainController();
-
         this.processors = [
             new SpaceShipDrawer(),
             new BulletDrawer(),
@@ -68,7 +41,7 @@ class Scene extends BaseScene {
     refresh() {
         this.clearCanvas(this.getCanvas());
         Ticker.inc();
-        
+
         this.actors = this.processors.reduce(
             (state, handler) => this.handle(state, handler)
             , this.actors)
