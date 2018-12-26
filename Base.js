@@ -13,6 +13,11 @@ class InputProcessor {
     }
 }
 
+class CanvasAwareInputProcessor {
+    process(keys, canvas, actors) {
+    }
+}
+
 class Drawer {
     /**
      * @param canvas
@@ -51,17 +56,6 @@ class HitProcessor {
 
 }
 
-class BaseScene {
-    getCanvas() {
-    }
-
-    getKeys() {
-    }
-
-    getActors() {
-    }
-}
-
 
 class BaseObject {
     constructor() {
@@ -87,7 +81,6 @@ class BaseObject {
     }
 
 
-
     setX(x) {
         this.x = this.cut(x);
     }
@@ -103,4 +96,31 @@ class BaseObject {
     hit(x) {
     }
 
+}
+
+
+class BaseScene {
+    getCanvas() {
+    }
+
+    getKeys() {
+    }
+
+    handle(actors, handler) {
+        if (handler instanceof HitProcessor) {
+            return handler.process(actors);
+        } else if (handler instanceof CanvasAwareProcessor) {
+            return handler.process(this.getCanvas(), actors)
+        } else if (handler instanceof CanvasAwareInputProcessor) {
+            return handler.process(this.getKeys(), this.getCanvas(), actors)
+        } else if (handler instanceof InputProcessor) {
+            return handler.process(this.getKeys(), actors)
+        } else if (handler instanceof Drawer) {
+            return handler.draw(this.getCanvas(), actors)
+        } else if (handler instanceof Processor) {
+            return handler.process(actors);
+        } else {
+            throw "No handler found for this shiet, burrp Morty.";
+        }
+    }
 }

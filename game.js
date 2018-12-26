@@ -31,42 +31,47 @@ class Scene extends BaseScene {
 
         this.againController = new AgainController();
 
+        this.processors = [
+            new SpaceShipDrawer(),
+            new BulletDrawer(),
+            new MeteorDrawer(),
+
+            new HpDrawer(),
+            new ScoreDrawer(),
+            new SieNieZesrajDrawer(),
+
+            new LinearMovementProcessor(),
+            new AngleMovementProcessor(),
+            new PositionProcessor(),
+
+            new BulletToAnythingHitProcessor(),
+            new InvulernableHitProcessorDecorator(new SpaceShipToAnythingHitProcessor()),
+            new MeteorToBulletHitProcessor(),
+
+            new DeathProcessor(),
+            new ShipDeathProcessor(),
+            new TtlProcessor(),
+            new MeteorSplitProcessor(),
+
+            new ReloadProcessor(),
+            new InvulDecreaser(),
+
+
+            new AgainController(),
+            new SpaceShipController()
+
+        ]
+
 
     }
 
     refresh() {
         this.clearCanvas(this.getCanvas());
         Ticker.inc();
-
-        this.actors =
-            [this.actors]
-                .map(statkiem => this.spaceShipDrawer.draw(this.getCanvas(), statkiem))
-                .map(bulleciem => this.bulletDrawer.draw(this.getCanvas(), bulleciem))
-                .map(meteorem => this.meteorDrawer.draw(this.getCanvas(), meteorem))
-
-                .map(statkiem => this.hpDrawer.draw(this.getCanvas(), statkiem))
-                .map(scorem => this.scoreDrawer.draw(this.getCanvas(), scorem))
-                .map(scorem => this.sieNieZesrajDrawer.draw(this.getCanvas(), scorem))
-
-
-                .map(all => this.linearMovementProcessor.process(all))
-                .map(all => this.angleMovementProcessor.process(all))
-                .map(all => this.positionProcessor.process(this.getCanvas(), all))
-
-                .map(bulleciem => this.bulletToAnythingHitProcessor.process(bulleciem))
-                .map(statkiem => this.spaceShipToBulletHitProcessor.process(statkiem))
-                .map(meteorem => this.meteorToBulletHitProcessor.process(meteorem))
-
-                .map(all => this.deathProcessor.process(all))
-                .map(all => this.spaceShipDeathProcessor.process(all))
-                .map(all => this.ttlProcessor.process(all))
-                .map(meteorem => this.meteorSplitProcessor.process(meteorem))
-
-                .map(all => this.spaceShipController.process(this.keys, all))
-                .map(all => this.againController.process(this.keys, this.getCanvas(), all))
-                .map(all => this.reloadProcessor.process(all))
-                .map(all => this.invulDecreaser.process(all))
-                [0];
+        
+        this.actors = this.processors.reduce(
+            (state, handler) => this.handle(state, handler)
+            , this.actors)
 
     }
 

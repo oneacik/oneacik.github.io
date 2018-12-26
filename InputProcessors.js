@@ -44,7 +44,7 @@ class SpaceShipController extends InputProcessor {
 }
 
 
-class AgainController{
+class AgainController extends CanvasAwareInputProcessor{
     process(keys, canvas, actors) {
         if (actors.find(x => x instanceof SpaceShip) === undefined) {
             if (keys.has("f")){
