@@ -2,11 +2,7 @@ class Scene extends BaseScene {
     constructor() {
         super();
         this.keys = new Set();
-        this.actors = [];
-        this.actors.push(new SpaceShip(this.getCanvas().width / 2.0, this.getCanvas().height / 2.0));
-        this.actors.push(new Meteor(this.getCanvas().width / 2.0, this.getCanvas().height / 3.0, Math.PI));
-        this.actors.push(new Score());
-
+        this.actors = AgainController.toNigdySieNieKonczy(this.getCanvas());
 
         this.spaceShipDrawer = new SpaceShipDrawer();
         this.bulletDrawer = new BulletDrawer();
@@ -14,6 +10,7 @@ class Scene extends BaseScene {
 
         this.hpDrawer = new HpDrawer();
         this.scoreDrawer = new ScoreDrawer();
+        this.sieNieZesrajDrawer = new SieNieZesrajDrawer();
 
         this.linearMovementProcessor = new LinearMovementProcessor();
         this.angleMovementProcessor = new AngleMovementProcessor();
@@ -24,11 +21,14 @@ class Scene extends BaseScene {
         this.meteorToBulletHitProcessor = new MeteorToBulletHitProcessor();
 
         this.deathProcessor = new DeathProcessor();
+        this.spaceShipDeathProcessor = new ShipDeathProcessor();
         this.ttlProcessor = new TtlProcessor();
         this.meteorSplitProcessor = new MeteorSplitProcessor();
 
         this.spaceShipController = new SpaceShipController();
         this.reloadProcessor = new ReloadProcessor();
+
+        this.againController = new AgainController();
 
 
     }
@@ -45,6 +45,8 @@ class Scene extends BaseScene {
 
                 .map(statkiem => this.hpDrawer.draw(this.getCanvas(), statkiem))
                 .map(scorem => this.scoreDrawer.draw(this.getCanvas(), scorem))
+                .map(scorem => this.sieNieZesrajDrawer.draw(this.getCanvas(), scorem))
+
 
                 .map(all => this.linearMovementProcessor.process(all))
                 .map(all => this.angleMovementProcessor.process(all))
@@ -55,10 +57,12 @@ class Scene extends BaseScene {
                 .map(meteorem => this.meteorToBulletHitProcessor.process(meteorem))
 
                 .map(all => this.deathProcessor.process(all))
+                .map(all => this.spaceShipDeathProcessor.process(all))
                 .map(all => this.ttlProcessor.process(all))
                 .map(meteorem => this.meteorSplitProcessor.process(meteorem))
 
                 .map(all => this.spaceShipController.process(this.keys, all))
+                .map(all => this.againController.process(this.keys, this.getCanvas(), all))
                 .map(all => this.reloadProcessor.process(all))
                 [0];
 

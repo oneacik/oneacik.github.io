@@ -21,7 +21,7 @@ class SpaceShipToAnythingHitProcessor extends HitProcessor {
 
         if (HitProcessor.isCircleHit(fake_first, second)) {
             first.hp -= 1;
-            first.invul = 1000;
+            first.invul = 100;
         }
         return first;
     }

@@ -39,16 +39,13 @@ class Meteor extends BaseObject {
 }
 
 class Score extends BaseObject {
-    constructor() {
-        super();
-        Score.score = 1000;
-    }
-
     static add(score){
         Score.score += score;
     }
 
-    getScore(){
+    static getScore(){
         return Score.score;
     }
 }
+
+Score.score=0;
