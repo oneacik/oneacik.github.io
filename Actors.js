@@ -5,7 +5,7 @@ class SpaceShip extends BaseObject {
         this.y = y;
         this.radius = 10;
         this.rotate = 0.0;
-        this.speed = 2.5;
+        this.speed = 2;
         this.reload = 0;
         this.hp = 5;
         this.invul = 0;
@@ -36,7 +36,7 @@ class Meteor extends BaseObject {
         this.y = y;
         this.rotate = rotate;
         this.radius = 8;
-        this.speed = Math.random() * 3;
+        this.speed = Math.random();
         this.hp = 1;
         this.setAllColors("#4edaff");
     }
