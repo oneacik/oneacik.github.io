@@ -8,6 +8,7 @@ class SpaceShip extends BaseObject {
         this.speed = 2.5;
         this.reload = 0;
         this.hp = 5;
+        this.invul = 0;
     }
 
 

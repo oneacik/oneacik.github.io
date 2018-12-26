@@ -1,9 +1,9 @@
 class Ticker{
-    get(){
+    static get(){
         return Ticker.i;
     }
 
-    inc(){
+    static inc(){
         Ticker.i++;
     }
 }

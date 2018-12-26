@@ -1,9 +1,9 @@
 class BulletToAnythingHitProcessor extends HitProcessor {
     do(first, second) {
-        if(!(first instanceof Bullet)){
+        if (!(first instanceof Bullet)) {
             return first;
         }
-        if(HitProcessor.isCircleHit(first, second)){
+        if (HitProcessor.isCircleHit(first, second)) {
             first.die = true;
         }
         return first;
@@ -11,16 +11,17 @@ class BulletToAnythingHitProcessor extends HitProcessor {
 }
 
 
-class SpaceShipToBulletHitProcessor extends HitProcessor {
+class SpaceShipToAnythingHitProcessor extends HitProcessor {
     do(first, second) {
-        if(!(first instanceof SpaceShip && second instanceof Bullet)){
+        if (!(first instanceof SpaceShip)) {
             return first;
         }
         //make it a little easier to not get hit
-        var fake_first = {x : first.x, y: first.y, radius: first.radius};
+        var fake_first = {x: first.x, y: first.y, radius: first.radius};
 
-        if(HitProcessor.isCircleHit(fake_first, second)){
+        if (HitProcessor.isCircleHit(fake_first, second)) {
             first.hp -= 1;
+            first.invul = 1000;
         }
         return first;
     }
@@ -28,15 +29,35 @@ class SpaceShipToBulletHitProcessor extends HitProcessor {
 
 class MeteorToBulletHitProcessor extends HitProcessor {
     do(first, second) {
-        if(!(first instanceof Meteor && second instanceof Bullet)){
+        if (!(first instanceof Meteor && second instanceof Bullet)) {
             return first;
         }
 
-        if(HitProcessor.isCircleHit(first, second)){
+        if (HitProcessor.isCircleHit(first, second)) {
             first.hp -= 1;
             Score.add(100);
         }
 
         return first;
+    }
+}
+
+class InvulernableHitProcessorDecorator extends HitProcessor {
+    constructor(processor) {
+        super();
+        this.processor = processor;
+    }
+
+    do(first, second) {
+        if (first.invul == null) {
+            return this.processor.do(first, second);
+        } else {
+            if (first.invul <= 0) {
+                return this.processor.do(first, second);
+            } else {
+                first.invul--;
+                return first;
+            }
+        }
     }
 }

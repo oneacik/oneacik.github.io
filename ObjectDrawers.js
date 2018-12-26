@@ -5,7 +5,16 @@ class SpaceShipDrawer extends Drawer {
             .forEach(
                 ship => {
                     var context = canvas.getContext('2d');
-                    context.strokeStyle = "#000000";
+                    if (ship.invul > 0) {
+                        if(Ticker.i%20 > 10){
+                            context.strokeStyle = "#FF0000";
+                        }else{
+                            context.strokeStyle = "#0000FF";
+                        }
+
+                    } else {
+                        context.strokeStyle = "#000000";
+                    }
 
                     context.beginPath();
                     context.moveTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));

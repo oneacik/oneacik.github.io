@@ -20,7 +20,7 @@ class Scene extends BaseScene {
         this.positionProcessor = new PositionProcessor();
 
         this.bulletToAnythingHitProcessor = new BulletToAnythingHitProcessor();
-        this.spaceShipToBulletHitProcessor = new SpaceShipToBulletHitProcessor();
+        this.spaceShipToBulletHitProcessor = new InvulernableHitProcessorDecorator(new SpaceShipToAnythingHitProcessor());
         this.meteorToBulletHitProcessor = new MeteorToBulletHitProcessor();
 
         this.deathProcessor = new DeathProcessor();
@@ -35,6 +35,7 @@ class Scene extends BaseScene {
 
     refresh() {
         this.clearCanvas(this.getCanvas());
+        Ticker.inc();
 
         this.actors =
             [this.actors]
@@ -44,7 +45,6 @@ class Scene extends BaseScene {
 
                 .map(statkiem => this.hpDrawer.draw(this.getCanvas(), statkiem))
                 .map(scorem => this.scoreDrawer.draw(this.getCanvas(), scorem))
-
 
                 .map(all => this.linearMovementProcessor.process(all))
                 .map(all => this.angleMovementProcessor.process(all))
