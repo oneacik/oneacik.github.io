@@ -32,7 +32,22 @@ class Meteor extends BaseObject {
         this.y = y;
         this.rotate = rotate;
         this.radius = 8;
-        this.speed = Math.random()*3;
+        this.speed = Math.random() * 3;
         this.hp = 1;
+    }
+}
+
+class Score extends BaseObject {
+    constructor() {
+        super();
+        Score.score = 1000;
+    }
+
+    static add(score){
+        Score.score += score;
+    }
+
+    getScore(){
+        return Score.score;
     }
 }

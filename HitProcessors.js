@@ -34,6 +34,7 @@ class MeteorToBulletHitProcessor extends HitProcessor {
 
         if(HitProcessor.isCircleHit(first, second)){
             first.hp -= 1;
+            Score.add(100);
         }
 
         return first;

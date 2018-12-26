@@ -71,15 +71,34 @@ class HpDrawer extends Drawer {
                         context.strokeStyle = "#0000FF";
 
                         context.beginPath();
-                        context.moveTo(beginX + (size+pad)*i,beginY);
-                        context.lineTo(beginX + (size+pad)*i+size,beginY);
-                        context.lineTo(beginX + (size+pad)*i+size,beginY+size);
-                        context.lineTo(beginX + (size+pad)*i,beginY+size);
-                        context.lineTo(beginX + (size+pad)*i,beginY);
+                        context.moveTo(beginX + (size + pad) * i, beginY);
+                        context.lineTo(beginX + (size + pad) * i + size, beginY);
+                        context.lineTo(beginX + (size + pad) * i + size, beginY + size);
+                        context.lineTo(beginX + (size + pad) * i, beginY + size);
+                        context.lineTo(beginX + (size + pad) * i, beginY);
                         context.stroke();
                     }
                 }
             );
+        return actors;
+    }
+}
+
+
+class ScoreDrawer extends Drawer {
+    draw(canvas, actors) {
+        actors
+            .filter(x => x instanceof Score)
+            .forEach(x => {
+                var beginX = canvas.width - 10;
+                var beginY = canvas.height - 20;
+
+                var ctx = canvas.getContext("2d");
+                ctx.textAlign = "right";
+                ctx.font = "10px Arial";
+                ctx.fillText("Score: " + x.getScore(), beginX, beginY);
+            });
+
         return actors;
     }
 }
