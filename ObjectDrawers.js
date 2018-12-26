@@ -5,24 +5,15 @@ class SpaceShipDrawer extends Drawer {
             .forEach(
                 ship => {
                     var context = canvas.getContext('2d');
-                    if (ship.invul > 0) {
-                        if(Ticker.i%20 > 10){
-                            context.strokeStyle = "#FF2222";
-                        }else{
-                            context.strokeStyle = "#2222FF";
-                        }
-
-                    } else {
-                        context.strokeStyle = "#FFFFFF";
+                    ship.setupContext(context)
+                    if ((ship.invul > 0) & (Ticker.i%20 > 10)){
+                            context.strokeStyle = ship.style.colorSfx;
                     }
-
                     context.beginPath();
                     context.moveTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 2.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 2.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 4.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 4.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));
-                    context.shadowColor = context.strokeStyle;
-                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -38,11 +29,9 @@ class BulletDrawer extends Drawer {
             .forEach(
                 bullet => {
                     var context = canvas.getContext('2d');
-                    context.strokeStyle = "#FF0000";
+                    bullet.setupContext(context)
                     context.beginPath();
                     context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
-                    context.shadowColor = context.strokeStyle;
-                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -57,11 +46,9 @@ class MeteorDrawer extends Drawer {
             .forEach(
                 bullet => {
                     var context = canvas.getContext('2d');
-                    context.strokeStyle = "#4edaff";
+                    bullet.setupContext(context)
                     context.beginPath();
                     context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
-                    context.shadowColor = context.strokeStyle;
-                    context.shadowBlur = 3;
                     context.stroke();
                 }
             );
@@ -83,15 +70,13 @@ class HpDrawer extends Drawer {
                 ship => {
                     for (var i = 0; i < ship.hp; i++) {
                         var context = canvas.getContext('2d');
-                        context.strokeStyle = "#0000FF";
-
+                        ship.setupContext(context)
                         context.beginPath();
                         context.moveTo(beginX + (size + pad) * i, beginY);
                         context.lineTo(beginX + (size + pad) * i + size, beginY);
                         context.lineTo(beginX + (size + pad) * i + size, beginY + size);
                         context.lineTo(beginX + (size + pad) * i, beginY + size);
                         context.lineTo(beginX + (size + pad) * i, beginY);
-                        context.shadowColor = "transparent";
                         context.stroke();
                     }
                 }
@@ -111,7 +96,6 @@ class ScoreDrawer extends Drawer {
         ctx.textAlign = "right";
         ctx.font = "10px Arial";
         ctx.fillText("Score: " + Score.getScore(), beginX, beginY);
-
         return actors;
     }
 }
