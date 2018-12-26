@@ -27,6 +27,7 @@ class Scene extends BaseScene {
 
         this.spaceShipController = new SpaceShipController();
         this.reloadProcessor = new ReloadProcessor();
+        this.invulDecreaser = new InvulDecreaser();
 
         this.againController = new AgainController();
 
@@ -64,6 +65,7 @@ class Scene extends BaseScene {
                 .map(all => this.spaceShipController.process(this.keys, all))
                 .map(all => this.againController.process(this.keys, this.getCanvas(), all))
                 .map(all => this.reloadProcessor.process(all))
+                .map(all => this.invulDecreaser.process(all))
                 [0];
 
     }

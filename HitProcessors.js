@@ -21,7 +21,7 @@ class SpaceShipToAnythingHitProcessor extends HitProcessor {
 
         if (HitProcessor.isCircleHit(fake_first, second)) {
             first.hp -= 1;
-            first.invul = 100;
+            first.invul = 80;
         }
         return first;
     }
@@ -55,7 +55,6 @@ class InvulernableHitProcessorDecorator extends HitProcessor {
             if (first.invul <= 0) {
                 return this.processor.do(first, second);
             } else {
-                first.invul--;
                 return first;
             }
         }

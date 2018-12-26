@@ -95,3 +95,16 @@ class ShipDeathProcessor extends Processor{
         return actors.filter(x => !(x instanceof SpaceShip && x.hp<0));
     }
 }
+
+class InvulDecreaser extends Processor{
+    process(actors){
+        return actors.map(x=>{
+            if(x.invul !=null){
+                if (x.invul>0){
+                    x.invul--;
+                }
+            }
+            return x;
+        })
+    }
+}
