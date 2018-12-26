@@ -23,7 +23,7 @@ class Bullet extends BaseObject {
         this.y = y;
         this.rotate = rotate;
         this.radius = 3;
-        this.speed = 5;
+        this.speed = 4;
         this.ttl = 500;
         this.setAllColors("green");
     }
@@ -45,7 +45,8 @@ class Meteor extends BaseObject {
 
 class ExplodingMeteor extends Meteor {
     constructor(x,y, rotate){
-        super(x,y,rotate)
+        super(x,y,rotate);
+        this.setAllColors("#ff8d2d");
     }
 }
 
