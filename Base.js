@@ -66,6 +66,26 @@ class BaseObject {
         this.canvasSize = 500;
         this.radius = 10;
         this.ttl = null;
+        this.style = {
+            colorMain : "white",
+            colorGlow : "white",
+            colorText : "white",
+            colorSfx : "red"
+        }
+    }
+
+    setAllColors(color){
+        this.style.colorMain = color;
+        this.style.colorGlow = color;
+        this.style.colorText = color;
+        this.style.colorSfx = color;
+    }
+
+    setupContext(context){
+        context.strokeStyle = this.style.colorMain;
+        context.fillStyle = this.style.colorMain;
+        context.shadowColor = this.style.colorGlow;
+        context.shadowBlur = 3;
     }
 
     draw(canvas) {

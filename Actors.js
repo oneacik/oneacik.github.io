@@ -9,6 +9,8 @@ class SpaceShip extends BaseObject {
         this.reload = 0;
         this.hp = 5;
         this.invul = 0;
+        this.setAllColors("white");
+        this.style.colorSfx = "orange";
     }
 
 
@@ -23,6 +25,7 @@ class Bullet extends BaseObject {
         this.radius = 3;
         this.speed = 5;
         this.ttl = 500;
+        this.setAllColors("green");
     }
 }
 
@@ -35,6 +38,7 @@ class Meteor extends BaseObject {
         this.radius = 8;
         this.speed = Math.random() * 3;
         this.hp = 1;
+        this.setAllColors("#4edaff");
     }
 }
 
