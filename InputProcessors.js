@@ -22,7 +22,7 @@ class SpaceShipController extends InputProcessor {
                         obj.speed = 5;
                     }
 
-                    if (keys.has("f")) {
+                    if (keys.has("j")) {
                         if (obj.reload < 0) {
                             obj.reload = 50;
                             toPush.push(
