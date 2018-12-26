@@ -18,10 +18,11 @@ class Scene extends BaseScene {
 
         this.bulletToAnythingHitProcessor = new BulletToAnythingHitProcessor();
         this.spaceShipToBulletHitProcessor = new SpaceShipToBulletHitProcessor();
-
+        this.meteorToBulletHitProcessor = new MeteorToBulletHitProcessor();
 
         this.deathProcessor = new DeathProcessor();
         this.ttlProcessor = new TtlProcessor();
+        this.meteorSplitProcessor = new MeteorSplitProcessor();
 
         this.spaceShipController = new SpaceShipController();
         this.reloadProcessor = new ReloadProcessor();
@@ -46,9 +47,11 @@ class Scene extends BaseScene {
 
                 .map(bulleciem => this.bulletToAnythingHitProcessor.process(bulleciem))
                 .map(statkiem => this.spaceShipToBulletHitProcessor.process(statkiem))
+                .map(meteorem => this.meteorToBulletHitProcessor.process(meteorem))
 
                 .map(all => this.deathProcessor.process(all))
                 .map(all => this.ttlProcessor.process(all))
+                .map(meteorem => this.meteorSplitProcessor.process(meteorem))
 
                 .map(all => this.spaceShipController.process(this.keys, all))
                 .map(all => this.reloadProcessor.process(all))

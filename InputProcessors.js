@@ -4,6 +4,7 @@ class SpaceShipController extends InputProcessor {
             .flatMap(obj => {
                 if (obj instanceof SpaceShip) {
                     var toPush = [obj];
+                    obj.speed = 3;
 
                     if (keys.has("a")) {
                         obj.rotate += 0.1;
@@ -13,9 +14,17 @@ class SpaceShipController extends InputProcessor {
                         obj.rotate -= 0.1;
                     }
 
+                    if (keys.has("s")) {
+                        obj.speed = 1;
+                    }
+
                     if (keys.has("w")) {
+                        obj.speed = 5;
+                    }
+
+                    if (keys.has("f")) {
                         if (obj.reload < 0) {
-                            obj.reload = 10;
+                            obj.reload = 50;
                             toPush.push(
                                 new Bullet(
                                     obj.x + Math.sin(obj.rotate) * obj.radius * 2,
@@ -24,6 +33,8 @@ class SpaceShipController extends InputProcessor {
                                 ));
                         }
                     }
+
+
                     return toPush;
                 } else {
                     return [obj];

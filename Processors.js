@@ -70,3 +70,23 @@ class ReloadProcessor extends Processor {
     }
 }
 
+class MeteorSplitProcessor extends Processor {
+    process(actors) {
+        return actors
+            .flatMap(x => {
+                if (x instanceof Meteor && x.hp < 0) {
+                    return [
+                        new Meteor(x.x, x.y, MeteorSplitProcessor.getRandomRotate()),
+                        new Meteor(x.x, x.y, MeteorSplitProcessor.getRandomRotate())
+                    ]
+                } else {
+                    return [x];
+                }
+            });
+    }
+
+    static getRandomRotate() {
+        return Math.random() * 2 * Math.PI;
+    }
+}
+

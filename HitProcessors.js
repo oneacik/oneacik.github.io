@@ -25,3 +25,17 @@ class SpaceShipToBulletHitProcessor extends HitProcessor {
         return first;
     }
 }
+
+class MeteorToBulletHitProcessor extends HitProcessor {
+    do(first, second) {
+        if(!(first instanceof Meteor && second instanceof Bullet)){
+            return first;
+        }
+
+        if(HitProcessor.isCircleHit(first, second)){
+            first.hp -= 1;
+        }
+
+        return first;
+    }
+}
