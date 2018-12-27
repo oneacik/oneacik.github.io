@@ -31,6 +31,13 @@ class Bullet extends BaseObject {
     }
 }
 
+class SlowBullet extends Bullet {
+    constructor(x, y, rotate) {
+        super(x, y, rotate);
+        this.speed = 2;
+    }
+}
+
 class Meteor extends BaseObject {
     constructor(x, y, rotate) {
         super();
@@ -44,15 +51,15 @@ class Meteor extends BaseObject {
         this.vertexes = this.generateVertexes(8)
     }
 
-    generateVertexes(sideNo){
+    generateVertexes(sideNo) {
         var radMin = 3;
         var radMax = 12;
         var vxs = [];
-        for (var i=0;i<sideNo;i++){
-            var radius = radMin + Math.random()*(radMax-radMin);
+        for (var i = 0; i < sideNo; i++) {
+            var radius = radMin + Math.random() * (radMax - radMin);
             var v = {};
-            v.x = radius * Math.cos(Math.PI*2 * i/sideNo);
-            v.y = radius * Math.sin(Math.PI*2 * i/sideNo);
+            v.x = radius * Math.cos(Math.PI * 2 * i / sideNo);
+            v.y = radius * Math.sin(Math.PI * 2 * i / sideNo);
             vxs.push(v)
         }
         return vxs
@@ -61,16 +68,16 @@ class Meteor extends BaseObject {
 }
 
 class ExplodingMeteor extends Meteor {
-    constructor(x,y, rotate){
-        super(x,y,rotate);
+    constructor(x, y, rotate) {
+        super(x, y, rotate);
         this.hp = 0;
         this.setAllColors("#ff8d2d");
     }
 }
 
 class SelfBombingMeteor extends Meteor {
-    constructor(x,y, rotate){
-        super(x,y,rotate);
+    constructor(x, y, rotate) {
+        super(x, y, rotate);
         this.hp = 1000;
         this.ttl = 400;
         this.setAllColors("#ea0020");
@@ -78,13 +85,13 @@ class SelfBombingMeteor extends Meteor {
 }
 
 class Score extends BaseObject {
-    static add(score){
+    static add(score) {
         Score.score += score;
     }
 
-    static getScore(){
+    static getScore() {
         return Score.score;
     }
 }
 
-Score.score=0;
+Score.score = 0;

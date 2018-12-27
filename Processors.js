@@ -14,35 +14,37 @@ class PositionProcessor extends CanvasAwareProcessor {
     }
 
     process(canvas, actors) {
-        return actors.map(obj => {
+        actors.forEach(obj => {
             obj.x = PositionProcessor.cut(canvas.width, obj.x);
             obj.y = PositionProcessor.cut(canvas.height, obj.y);
             return obj;
         });
+        return actors
     }
 }
 
 class LinearMovementProcessor extends Processor {
     process(actors) {
-        return actors.map(obj => {
+        actors.forEach(obj => {
             if (obj.dx != null && obj.dy != null) {
                 obj.x += obj.dx;
                 obj.y += obj.dy;
             }
             return obj;
         });
+        return actors;
     }
 }
 
 class AngleMovementProcessor extends Processor {
     process(actors) {
-        return actors.map(obj => {
+        actors.forEach(obj => {
             if (obj.speed != null && obj.rotate != null) {
                 obj.x += Math.sin(obj.rotate) * obj.speed;
                 obj.y += Math.cos(obj.rotate) * obj.speed;
             }
-            return obj
         });
+        return actors;
     }
 }
 
@@ -62,12 +64,12 @@ class TtlProcessor extends Processor {
 
 class ReloadProcessor extends Processor {
     process(actors) {
-        return actors.map(x => {
+        actors.forEach(x => {
             if (x.reload != null) {
                 x.reload -= 1;
             }
-            return x;
         });
+        return actors;
     }
 }
 
@@ -80,13 +82,14 @@ class ShipDeathProcessor extends Processor {
 
 class InvulDecreaser extends Processor {
     process(actors) {
-        return actors.map(x => {
+        actors.forEach(x => {
             if (x.invul != null) {
                 if (x.invul > 0) {
                     x.invul--;
                 }
             }
-            return x;
-        })
+        });
+
+        return actors;
     }
 }

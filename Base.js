@@ -33,7 +33,7 @@ class Drawer {
 class HitProcessor {
 
     process(actors) {
-        return actors.map(first =>
+        actors.forEach(first =>
             actors
                 .filter(second => second !== first)
                 .reduce(
@@ -41,6 +41,7 @@ class HitProcessor {
                     first
                 )
         );
+        return actors;
     }
 
     /**
