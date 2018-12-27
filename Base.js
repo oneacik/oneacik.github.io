@@ -67,21 +67,21 @@ class BaseObject {
         this.radius = 10;
         this.ttl = null;
         this.style = {
-            colorMain : "white",
-            colorGlow : "white",
-            colorText : "white",
-            colorSfx : "red"
+            colorMain: "white",
+            colorGlow: "white",
+            colorText: "white",
+            colorSfx: "red"
         }
     }
 
-    setAllColors(color){
+    setAllColors(color) {
         this.style.colorMain = color;
         this.style.colorGlow = color;
         this.style.colorText = color;
         this.style.colorSfx = color;
     }
 
-    setupContext(context){
+    setupContext(context) {
         context.strokeStyle = this.style.colorMain;
         context.fillStyle = this.style.colorMain;
         context.shadowColor = this.style.colorGlow;
@@ -126,19 +126,21 @@ class BaseScene {
     getKeys() {
     }
 
-    handle(actors, handler) {
+    handle(actors, processors, handler) {
+        var wrap = (actors) => [actors, processors];
+
         if (handler instanceof HitProcessor) {
-            return handler.process(actors);
+            return wrap(handler.process(actors));
         } else if (handler instanceof CanvasAwareProcessor) {
-            return handler.process(this.getCanvas(), actors)
+            return wrap(handler.process(this.getCanvas(), actors))
         } else if (handler instanceof CanvasAwareInputProcessor) {
-            return handler.process(this.getKeys(), this.getCanvas(), actors)
+            return wrap(handler.process(this.getKeys(), this.getCanvas(), actors))
         } else if (handler instanceof InputProcessor) {
-            return handler.process(this.getKeys(), actors)
+            return wrap(handler.process(this.getKeys(), actors))
         } else if (handler instanceof Drawer) {
-            return handler.draw(this.getCanvas(), actors)
+            return wrap(handler.draw(this.getCanvas(), actors))
         } else if (handler instanceof Processor) {
-            return handler.process(actors);
+            return wrap(handler.process(actors));
         } else {
             throw "No handler found for this shiet, burrp Morty.";
         }

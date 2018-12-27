@@ -43,9 +43,9 @@ class Scene extends BaseScene {
         this.clearCanvas(this.getCanvas());
         Ticker.inc();
 
-        this.actors = this.processors.reduce(
-            (state, handler) => this.handle(state, handler)
-            , this.actors)
+        [this.actors, this.processors] = this.processors.reduce(
+            (state, handler) => this.handle(state[0], state[1], handler)
+            , [this.actors, this.processors])
 
     }
 
