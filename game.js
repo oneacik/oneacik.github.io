@@ -23,8 +23,9 @@ class Scene extends BaseScene {
 
             new DeathProcessor(),
             new ShipDeathProcessor(),
-            new TtlProcessor(),
             new MeteorSplitProcessor(),
+            new TtlProcessor(),
+
 
             new ReloadProcessor(),
             new InvulDecreaser(),

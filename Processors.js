@@ -48,14 +48,15 @@ class AngleMovementProcessor extends Processor {
 
 class TtlProcessor extends Processor {
     process(actors) {
-        return actors.map(x => {
-            if (x.ttl != null) {
-                x.ttl -= 1;
-            }
-            return x;
-        }).filter(x =>
-            x.ttl == null || x.ttl > 0
-        );
+        return actors.filter(x =>
+            x.ttl == null || x.ttl >= 0
+        )
+            .map(x => {
+                if (x.ttl != null) {
+                    x.ttl -= 1;
+                }
+                return x;
+            });
     }
 }
 
