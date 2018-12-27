@@ -48,7 +48,18 @@ class MeteorDrawer extends Drawer {
                     var context = canvas.getContext('2d');
                     bullet.setupContext(context)
                     context.beginPath();
-                    context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
+                    context.moveTo(
+                        bullet.x + bullet.vertexes[7].x,
+                        bullet.y + bullet.vertexes[7].y)
+                    bullet.vertexes.forEach(
+                        v => {
+                            context.lineTo(
+                                bullet.x + v.x,
+                                bullet.y + v.y
+                            )
+                        }
+                    )
+                    //context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
                     context.stroke();
                 }
             );
@@ -106,7 +117,7 @@ class SieNieZesrajDrawer extends Drawer {
             var beginX = canvas.width / 2;
             var beginY = canvas.height / 2;
 
-            var ctx = canvas.getContext("2d");
+            var ctx = canvas.getContext("2d")
             ctx.fillStyle = "white"
             ctx.textAlign = "center";
             ctx.font = "40px Arial";
