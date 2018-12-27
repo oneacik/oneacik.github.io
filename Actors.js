@@ -84,6 +84,15 @@ class SelfBombingMeteor extends Meteor {
     }
 }
 
+class HealingMeteor extends Meteor {
+    constructor(x, y, rotate) {
+        super(x, y, rotate);
+        this.hp = 20;
+        this.ttl = 3000;
+        this.setAllColors("#3eea00");
+    }
+}
+
 class Score extends BaseObject {
     static add(score) {
         Score.score += score;

@@ -3,7 +3,12 @@ class MeteorSplitProcessor extends Processor {
 
     constructor() {
         super();
-        this.splits = [new ExplodingMeteorSplit(), new SelfBombingSplit(), new StandardMeteorSplit()];
+        this.splits = [
+            new HealingMeteorSplit(),
+            new ExplodingMeteorSplit(),
+            new SelfBombingSplit(),
+            new StandardMeteorSplit()
+        ];
     }
 
     process(actors) {
@@ -63,6 +68,19 @@ class SelfBombingSplit extends BaseMeteorSplit {
     }
 }
 
+class HealingMeteorSplit extends BaseMeteorSplit {
+    split(actors, meteor) {
+        if (meteor.hp < 0) {
+            actors.find(x => x instanceof SpaceShip).hp += 5;
+        }
+        return [];
+    }
+
+    matches(meteor) {
+        return (meteor instanceof HealingMeteor);
+    }
+}
+
 class StandardMeteorSplit extends BaseMeteorSplit {
     split(actors, meteor) {
         var ran = Math.random();
@@ -87,6 +105,7 @@ class StandardMeteorSplit extends BaseMeteorSplit {
     getRandomMeteor() {
         var x = Math.random() * 100;
         if (x < 30) return SelfBombingMeteor;
+        if (x < 40) return HealingMeteor;
         return ExplodingMeteor;
     }
 
