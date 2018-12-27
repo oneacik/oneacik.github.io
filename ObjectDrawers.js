@@ -9,16 +9,27 @@ class SpaceShipDrawer extends Drawer {
             .forEach(
                 ship => {
                     var context = canvas.getContext('2d');
+                    context.save()
                     ship.setupContext(context)
                     if ((ship.invul > 0) & (Ticker.i%20 > 10)){
                             context.strokeStyle = ship.style.colorSfx;
                     }
+                    context.translate(ship.x, ship.y)
+                    context.rotate(-ship.rotate)
                     context.beginPath();
+                    context.stroke(
+                        new Path2D(ship.shapePathString)
+                        )
+                    
+                    context.restore()
+                    
+                    /*
                     context.moveTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 2.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 2.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate + 4.0 / 3.0 * Math.PI), ship.y + ship.radius * Math.cos(ship.rotate + 4.0 / 3.0 * Math.PI));
                     context.lineTo(ship.x + ship.radius * Math.sin(ship.rotate), ship.y + ship.radius * Math.cos(ship.rotate));
                     context.stroke();
+                    */
                 }
             );
         return actors;
@@ -33,15 +44,16 @@ class BulletDrawer extends Drawer {
             .forEach(
                 bullet => {
                     var context = canvas.getContext('2d');
+                    context.save()
                     bullet.setupContext(context)
+                    context.translate(bullet.x, bullet.y)
+                    context.rotate(-bullet.rotate)
                     context.beginPath();
                     context.stroke(
-                        getRelativePath2D(
-                            bullet.x,
-                            bullet.y-5,
-                            bullet.shapePathString
+                        new Path2D(bullet.shapePathString)
                         )
-                    );
+                    
+                    context.restore()
                 }
             );
         return actors;
@@ -55,21 +67,26 @@ class MeteorDrawer extends Drawer {
             .forEach(
                 bullet => {
                     var context = canvas.getContext('2d');
+                    context.save()
                     bullet.setupContext(context)
+                    context.translate(bullet.x, bullet.y)
+                    context.rotate(-bullet.rotate)
                     context.beginPath();
                     context.moveTo(
-                        bullet.x + bullet.vertexes[7].x,
-                        bullet.y + bullet.vertexes[7].y)
+                        bullet.vertexes[7].x,
+                        bullet.vertexes[7].y)
                     bullet.vertexes.forEach(
                         v => {
                             context.lineTo(
-                                bullet.x + v.x,
-                                bullet.y + v.y
+                                v.x,
+                                v.y
                             )
                         }
                     )
-                    //context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
                     context.stroke();
+                    context.restore()
+
+                    //context.arc(bullet.x, bullet.y, bullet.radius, 0, 2 * Math.PI);
                 }
             );
         return actors;
