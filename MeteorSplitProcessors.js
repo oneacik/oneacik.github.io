@@ -71,7 +71,7 @@ class SelfBombingSplit extends BaseMeteorSplit {
 class HealingMeteorSplit extends BaseMeteorSplit {
     split(actors, meteor) {
         if (meteor.hp < 0) {
-            actors.find(x => x instanceof SpaceShip).hp += 5;
+            actors.find(x => x instanceof SpaceShip).hp += meteor.hpAdd;
         }
         return [];
     }
@@ -105,7 +105,7 @@ class StandardMeteorSplit extends BaseMeteorSplit {
     getRandomMeteor() {
         var x = Math.random() * 100;
         if (x < 30) return SelfBombingMeteor;
-        if (x < 40) return HealingMeteor;
+        if (x < 35) return HealingMeteor;
         return ExplodingMeteor;
     }
 
