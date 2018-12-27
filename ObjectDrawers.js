@@ -110,7 +110,7 @@ class SieNieZesrajDrawer extends Drawer {
             ctx.fillStyle = "white"
             ctx.textAlign = "center";
             ctx.font = "40px Arial";
-            if (Score.getScore() > 10000) {
+            if (Score.getScore() > 100000) {
                 ctx.fillText("Tylko Się Nię Zesraj", beginX, beginY);
                 ctx.font = "20px Arial";
                 ctx.fillText("By pominąć uwagę naciśnij f.", beginX, beginY*3/2);

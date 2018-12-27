@@ -36,7 +36,11 @@ class BaseMeteorSplit {
 class ExplodingMeteorSplit extends BaseMeteorSplit {
 
     split(actors, meteor) {
-        return [1, 2, 3, 4, 5].map(x => new Bullet(meteor.x, meteor.y, MeteorSplitProcessor.getRandomRotate()));
+        return [1, 2, 3, 4, 5]
+            .map(x => {
+                var rot = MeteorSplitProcessor.getRandomRotate();
+                return new Bullet(meteor.x + meteor.radius * 2 * Math.sin(rot), meteor.y + meteor.radius * 2 * Math.cos(rot), rot);
+            });
     }
 
     matches(meteor) {

@@ -7,7 +7,7 @@ class SpaceShip extends BaseObject {
         this.rotate = 0.0;
         this.speed = 2;
         this.reload = 0;
-        this.hp = 5;
+        this.hp = 25;
         this.invul = 0;
         this.setAllColors("white");
         this.style.colorSfx = "orange";
@@ -37,7 +37,7 @@ class Meteor extends BaseObject {
         this.rotate = rotate;
         this.radius = 8;
         this.speed = Math.random();
-        this.hp = 1;
+        this.hp = 5;
         this.setAllColors("#4edaff");
     }
 
