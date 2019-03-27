@@ -1,0 +1,81 @@
+big-skill {
+    display: block;
+    width: 300px;
+    height: 300px;
+    border: black 5px solid;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    padding: 10px;
+}
+
+big-skill.increase {
+    height: 400px;
+}
+
+big-skill > banner {
+    height: 30px;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+big-skill > rate {
+    display: block;
+    text-align: center;
+    color: transparent;
+    text-shadow: 0 0 0 gold;
+    font-size: xx-large;
+}
+
+big-skill > description {
+    margin-top: 5px;
+    display: block;
+    text-align: justify;
+}
+
+big-skill description.smaller  {
+    font-size: 16px !important;
+}
+
+big-skill > mention {
+    display: block;
+    text-align: center;
+    font-style: italic;
+}
+
+skill {
+    border: black 1px solid;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 30px;
+    background-color: darkgrey;
+    margin: 5px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    width: fit-content;
+}
+
+skill > rate {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+    margin-left: 5px;
+}
+
+rate.nice {
+    background-color: gold;
+}
+
+rate.fine {
+    background-color: silver;
+}
+
+rate.meh {
+    background-color: brown;
+}
