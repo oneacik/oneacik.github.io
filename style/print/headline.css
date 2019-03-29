@@ -1,0 +1,41 @@
+
+headline {
+    display: flex;
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+headline > description {
+    margin-right: 20px;
+    padding: 20px;
+}
+
+headline > description > table {
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+headline > description > table tr > td:first-child {
+    padding-right: 10px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+headline > description > table tr > td:last-child {
+    text-align: right;
+}
+
+headline > description {
+    display: block;
+    flex-grow: 1.5;
+}
+
+headline > div.img {
+    display: block;
+}
+
+headline > div.img > img {
+    width: 200px;
+
+}

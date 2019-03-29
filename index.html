@@ -6,10 +6,17 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="style/headline.css"/>
+
     <link rel="stylesheet" type="text/css" href="style/base.css"/>
-    <link rel="stylesheet" type="text/css" href="style/page.css"/>
-    <link rel="stylesheet" type="text/css" href="style/skill.css"/>
+    <link rel="stylesheet" type="text/css" href="style/screen/page.css"/>
+
+    <link rel="stylesheet" media="screen" type="text/css" href="style/screen/skill.css"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="style/base.css"/>
+    <link rel="stylesheet" media="screen" type="text/css" href="style/screen/headline.css"/>
+
+    <link rel="stylesheet" media="print" type="text/css" href="style/print/skill.css"/>
+    <link rel="stylesheet" media="print" type="text/css" href="style/print/page.css"/>
+    <link rel="stylesheet" media="print" type="text/css" href="style/print/headline.css"/>
 </head>
 <body>
 <div id="app">
@@ -41,10 +48,11 @@
             </description>
             <div class="img"><img src="img/me.jpg"></div>
         </headline>
-        <div class="section">
+        <div class="section" style="page-break-before: avoid">
             <banner>My story</banner>
             <text>
-                The days go by but my attitude of self development is never ending as is my dislike towards the stagnation.
+                The days go by but my attitude of self development is never ending as is my dislike towards the
+                stagnation.
                 I starting coding when I was 10, it was probably 4th class of primary school, during my 6th grade I
                 conducted
                 even a programming course for my 'more junior' colleagues which didn't quite worked well, but it was a
