@@ -1,40 +1,551 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+        <title>reveal.js</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+        <link rel="stylesheet" href="dist/reset.css">
+        <link rel="stylesheet" href="dist/reveal.css">
+        <link rel="stylesheet" href="dist/theme/black.css">
 
-		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="plugin/highlight/monokai.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown>
+                    <textarea data-template>
+                        # Clean & Hexagonal Architecture
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
-		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
-			Reveal.initialize({
-				hash: true,
 
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-			});
-		</script>
-	</body>
+                        #### By Piotr Suwała
+                    </textarea>
+                </section>
+                <section>
+                    <h2> A story of using architectural patterns in open source application<br/><span class="fragment" style="color: red">for templating prints</span></h2>
+                </section>
+                <section>
+                    <div class="r-stack r-stretch" style="place-content: space-around space-around; grid-template-columns: 100%; grid-template-rows: 100%;">
+                        <h1>But Why?</h1>
+                        <img class="fragment" src="./img/space.png"/>
+                        <img class="fragment" src="./img/zebra.jpg"/>
+                        <img class="fragment" src="./img/label.jpg"/>
+                        <img class="fragment" src="./img/badux.png"/>
+                        <img class="fragment" src="./img/horlang.png"/>
+                        <img class="fragment" src="./img/python.png"/>
+                    </div>
+                </section>
+                <section>
+                    <div class="r-stack r-stretch" style="place-content: space-around space-around; grid-template-columns: 100%; grid-template-rows: 100%;">
+                        <h1>What then?</h1>
+                        <img class="fragment" src="./img/svglogo.png"/>
+                        <img class="fragment" src="./img/svgcode.png"/>
+                        <img class="fragment" src="./img/hack.jpeg"/>
+                        <img class="fragment" src="./img/gantt.jpg"/>
+                    </div>
+                </section>
+                <section>
+                    <h1>Whoami?</h1>
+                </section>
+                <section>
+                    <ul>
+                        <li>🦾 Backend (or FullStack) developer</li>
+                        <li class="fragment">🤵 Dream to become a consultant/architect</li>
+                        <li class="fragment">🤢 Several years in shit driven development</li>
+                        <li class="fragment">💕 starting new projects</li>
+                        <li class="fragment">💕 collaborating on projects</li>
+                        <li class="fragment">💔 cognitive load</li>
+                        <li class="fragment">💔 reinventing the wheel</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>The Stack</h1>
+                </section>
+                <section>
+                    <div class="r-stack">
+                        <ul>
+                            <div class="fragment semi-fade-out" data-fragment-index="15">
+                                <li data-fragment-index="1"><b>🌩Event Storming</b> - to quickly design the application</li>
+                                <li class="fragment" data-fragment-index="2"><b>😹Kotlin</b> - to minimize the boilerplate and better DX</li>
+                                <li class="fragment" data-fragment-index="3"><b>♨Spring Boot</b> - to not invent the wheel again</li>
+                                <li class="fragment" data-fragment-index="4"><b>😴Spring Data Rest</b> - to expose endpoints to frontend ASAP</li>
+                                <li class="fragment" data-fragment-index="5"><b>🐋Docker</b> - to allow frontend dev to easily test with backend</li>
+                                <li class="fragment" data-fragment-index="6"><b>🧼Clean Architecture</b> - to minimize cognitive load and allow for small contributions</li>
+                                <li class="fragment" data-fragment-index="9"><b>🐝Hexagonal Architecture</b> - to introduce structure and convention (subjective choice)</li>
+                            </div>
+                            <li class="fragment" data-fragment-index="15"><b>NOTICE:</b> all those were made to address some issues!</li>
+                        </ul>
+                        <div class="r-stack fragment fade-out" data-fragment-index="9">
+                            <img class="fragment fade-in" data-fragment-index="7" src="./img/kotlin.png"/>
+                            <img class="fragment fade-in" data-fragment-index="8" src="./img/android.jpeg"/>
+                        </div>
+
+                        <div class="r-stack fragment fade-out" data-fragment-index="14">
+                            <img class="fragment fade-in" data-fragment-index="10" src="./img/MVC3.png"/>
+                            <img class="fragment fade-in" data-fragment-index="11" src="./img/hex.png"/>
+                            <img class="fragment fade-in" data-fragment-index="12" src="./img/spaghetti.jpeg"/>
+                            <img class="fragment fade-in" data-fragment-index="13" src="./img/plspaghetti.jpg"/>
+                        </div>
+                        <div>
+                            <h1 class="fragment" style="color:red;font-weight:bold;"  data-fragment-index="16">Don't use things you don't need!!!</h2>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h1>The Juice AKA <br/><span class="fragment" style="color: red">WTF are those practices</span></h1>
+                </section>
+                <section>
+                    <div class="r-stack">
+                        <h1>Clean Architecture?</h1>
+                        <img class="fragment" src="./img/SOLID.jpg"/>
+                        <img class="fragment" src="./img/solid2.png"/>
+                        <img class="fragment" style="width:80%" src="./img/bob.jpg"/>
+                        <img class="fragment" style="width:50%" src="./img/cleanbook.jpg"/>
+                        <img class="fragment" style="width:60%" src="./img/succ.png"/>
+                    </div>
+                </section>
+                <section>
+                    <h1>Let's Reduce:<br/><span class="fragment" style="color: red">Clean Architecture = S.O.L.I.D. + Factories</span></h1>
+                </section>
+                <section>
+                    <pre class="r-stretch"><code data-noescape data-line-numbers="2-16|11-16|10-17|20-30|24-24|23-28|22-29">
+    @Bean
+    fun previewingService(
+        templatingService: TemplatingService,
+        svgSizeExtractor: SvgSizeExtractor,
+        multipleSVGRendererService: MultipleSVGRenderingService,
+        labelRescaler: LabelRescaler,
+        templateRepository: SpringTemplateRepository
+    ): PreviewingService =
+        CachedPreviewingService(
+            LanguagePreviewingService(
+                templatingService,
+                svgSizeExtractor,
+                multipleSVGRendererService,
+                labelRescaler
+            )
+        )
+
+
+    @Bean
+    fun multipleSVGRendererService(): MultipleSVGRenderingService {
+        return MultipleSVGRenderingServiceImpl(
+            FlavorAwareRenderingService(
+                InkscapeRendererService(), 
+                    listOf(
+                        QRCodeFlavor()
+                    )
+            )
+        )
+    }
+                    </code></pre>
+                </section>
+                <section>
+                    <pre class="r-stretch"><code class="language-kotlin" data-trim data-noescape data-line-numbers="2-7|9-27|29-50|30-32|34-43|60-67" ><script type="text/template">
+                        //
+                        interface PreviewingService {
+                            fun preview(
+                                    templateId: Long, 
+                                    fields: Map<String, String>
+                                ): List<RenderedImage>
+                        }
+
+                        class LanguagePreviewingService(
+                            val templateService: TemplatingService,
+                            val svgSizeExtractor: SvgSizeExtractor,
+                            val SVGRendererService: MultipleSVGRenderingService,
+                            val labelRescaler: LabelRescaler
+                        ) : PreviewingService {
+
+                            override fun preview(templateId: Long, fields: Map<String, String>): List<RenderedImage> {
+                                val render =
+                                    templateService.template(templateId, fields).templated
+                                        .renderToImage(
+                                            svgSizeExtractor,
+                                            labelRescaler,
+                                            SVGRendererService
+                                        )
+
+                                return render
+                            }
+                        }
+
+                        @RepositoryEventHandler
+                        class CachedPreviewingService(
+                                val previewingService: PreviewingService
+                            ) : PreviewingService {
+
+                            val cache: ConcurrentLruCache<Long, ConcurrentLruCache<Map<String, String>, List<RenderedImage>>> =
+                                ConcurrentLruCache(100) { key ->
+                                    ConcurrentLruCache(3) { fields ->
+                                        previewingService.preview(key, fields)
+                                    }
+                                }
+
+                            override fun preview(templateId: Long, fields: Map<String, String>): List<RenderedImage> {
+                                return cache.get(templateId).get(fields)
+                            }
+
+                            @HandleAfterCreate
+                            fun create(template: Template) = evoke(template)
+
+                            @HandleAfterSave
+                            fun evoke(template: Template) = cache.remove(template.id!!)
+                        }
+
+                        @Bean
+                        fun previewingService(
+                            templatingService: TemplatingService,
+                            svgSizeExtractor: SvgSizeExtractor,
+                            multipleSVGRendererService: MultipleSVGRenderingService,
+                            labelRescaler: LabelRescaler,
+                            templateRepository: SpringTemplateRepository
+                        ): PreviewingService =
+                            CachedPreviewingService(
+                                LanguagePreviewingService(
+                                    templatingService,
+                                    svgSizeExtractor,
+                                    multipleSVGRendererService,
+                                    labelRescaler
+                                )
+                            )
+
+                </script></code></pre>
+                </section>
+                <section>
+                    <img src="./img/cleanbook.jpg"/>
+                </section>
+                <section>
+                    <div class="r-stack">
+                        <ul>
+                            <li>🗣 Clean Architecture helps with code reusability</li>
+                            <li class="fragment">🤷 Maybe</li>
+                            <li class="fragment">🗣 SOLID <span class="fragment strike highlight-red">helps with code reusability</span></li>
+                            <li class="fragment">👨‍🔧 SOLID helps with code flexibility/recyclability</li>
+                            <li class="fragment">📖 Creating flexible design and locking as late as possible</li>
+                            <li class="fragment">🧓 "It (Your Software) works because getting something to work—once—just isn’t that hard"</li>
+                        </ul>
+                        <img class="fragment" style="width:60%" src="./img/succ.png"/>
+                    </div>
+                </section>
+                <section>
+                    <h2>Hexagonal Architecture <br/><span class="fragment" style="color:red">or Ports & Adapters</span></h1>
+                </section>
+                <section>
+                    <ul>
+                        <li>🥯 How to Bake Hex</li>
+                        <li class="fragment">🥞 Three Layers:</li>
+                        <ol>
+                            <li class="fragment">🌐 Domain: Business Rules</li>
+                            <li class="fragment">🤵 Application Services: Use Cases</li>
+                            <li class="fragment">🔌 Peripherals: Outside World Connectors</li>
+                        </ol>
+                        <li class="fragment">⬇ Layer knows only about layer below</li>
+                        <li class="fragment">🐽 Layer below exposes interfaces (ports)</li>
+                        <li class="fragment">🤘 Layer above implements those interfaces (adapters)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>To the Code!</h1>
+                    <h2 class="fragment">The Domain</h2>
+                </section>
+                <section>
+                    <pre class="r-stretch"><code class="language-kotlin" data-trim data-noescape data-line-numbers="1-3|16-17|38-52|62-79|81-90" ><script type="text/template">
+                        @Entity
+@Table(name = "templates")
+class Template {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    var id: Long? = null
+
+    @Column(name = "name")
+    var name: String? = null
+
+    @Column(name = "type")
+    var type: TemplateType = TemplateType.SVG
+
+    @Column(name = "template")
+    var template: String = ""
+
+    @Column(name = "created")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    var created: Date? = null
+
+    @Column(name = "updated")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    var updated: Date? = null
+
+    @PrePersist
+    fun onCreate() {
+        updated = Date()
+        created = Date()
+    }
+
+    @PreUpdate
+    fun onUpdate() {
+        updated = Date()
+    }
+
+    fun renderTemplate(
+        fields: Map<String, String>?,
+        templateService: TemplateService,
+    ): RenderedTemplate {
+        if (type != TemplateType.SVG) {
+            throw UnsupportedOperationException()
+        }
+
+        return RenderedTemplate(
+            templateService.render(
+                template, 
+                fields ?: emptyMap()
+            )
+        )
+    }
+
+    fun extractFieldNamesFromTemplate(fieldExtractor: Function<String, List<String>>): List<String> =
+        fieldExtractor.apply(template)
+
+    enum class TemplateType {
+        SVG, MD
+    }
+}
+
+data class RenderedTemplate(val template: String) {
+    val DEFAULT_LABEL_SIZE = PrintDimensions.ORANGE_LABEL
+
+    fun renderToImage(
+        svgSizeExtractor: SvgSizeExtractor,
+        labelRescaler: LabelRescaler,
+        SVGRenderer: MultipleSVGRenderingService
+    ): List<RenderedImage> {
+        val svgDimensions = 
+            svgSizeExtractor.extract(template) 
+                ?: DEFAULT_LABEL_SIZE
+        val toRenderDimensions = 
+            labelRescaler.rescale(svgDimensions)
+        return SVGRenderer.renderAll(
+            SVGRenderingInput(template, toRenderDimensions)
+        )
+    }
+}
+
+data class RenderedImage(val image: BufferedImage) {
+    fun printViaLanguage(
+        imageToLanguageConverter: ImageToLanguage,
+        languagePrinter: LanguagePrinterService
+    ) {
+        val language = 
+            imageToLanguageConverter.convert(image)
+        languagePrinter.print(language)
+    }
+}
+
+sealed class RenderingInput {
+    data class SVGRenderingInput(val content: String, val printDimensions: PrintDimensions) : RenderingInput()
+}
+
+data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
+    companion object {
+        val ORANGE_LABEL = PrintDimensions(400, 240)
+    }
+}                    </script></code></pre>
+                </section>
+                <section>
+                    <h1>And the other layers?</h1>
+                    <h2 class="fragment">Vertical Slice</h2>
+                </section>
+                <section>
+                    <pre class="r-stretch"><code class="language-kotlin" data-trim data-noescape data-line-numbers="1-13|15-33|37-58|49-55|22-33|9|61-76|78-100" ><script type="text/template">
+                        data class RenderedTemplate(val template: String) {
+                            val DEFAULT_LABEL_SIZE = PrintDimensions.ORANGE_LABEL
+
+                            fun renderToImages(
+                                svgSizeExtractor: SvgSizeExtractor,
+                                labelRescaler: LabelRescaler,
+                                SVGRenderer: MultipleSVGRenderingService
+                            ): List<RenderedImage> {
+                                val svgDimensions = svgSizeExtractor.extract(template) ?: DEFAULT_LABEL_SIZE
+                                val toRenderDimensions = labelRescaler.rescale(svgDimensions)
+                                return SVGRenderer.renderAll(RenderingInput.SVGRenderingInput(template, toRenderDimensions))
+                            }
+                        }
+
+                        class LanguagePreviewingService(
+                            val templatingService: TemplatingService,
+                            val svgSizeExtractor: SvgSizeExtractor,
+                            val SVGRendererService: MultipleSVGRenderingService,
+                            val labelRescaler: LabelRescaler
+                        ) : PreviewingService {
+
+                            override fun preview(templateId: Long, fields: Map<String, String>): List<RenderedImage> {
+                                val render =
+                                    templatingService.template(templateId, fields)
+                                        .templated
+                                        .renderToImages(
+                                            svgSizeExtractor,
+                                            labelRescaler,
+                                            SVGRendererService
+                                        )
+
+                                return render
+                            }
+                        }
+
+
+                        @RestController
+                        @CrossOrigin(origins = ["*"])
+                        @RequestMapping(path = ["/api/templates/{templateId}/preview"])
+                        class PreviewController(
+                            val printingService: PreviewingService
+                        ) {
+                            @GetMapping(produces = ["image/png"])
+                            fun preview(@PathVariable templateId: Long, @RequestParam fields: Map<String, String>): BufferedImage {
+                                return printingService.preview(templateId, fields)
+                                    .firstOrNull()?.image ?: throw ResourceNotFoundException()
+                            }
+
+                            @GetMapping(produces = ["application/json", "application/bson"])
+                            fun previewAll(@PathVariable templateId: Long, @RequestParam fields: Map<String, String>): ImagesDTO {
+                                return ImagesDTO(
+                                    printingService.preview(templateId, fields)
+                                        .map { it.image }
+                                )
+                            }
+
+                            data class ImagesDTO(val images: List<BufferedImage>)
+                        }
+                        //
+                        //
+                        class SvgSizeExtractorImpl : SvgSizeExtractor {
+                            override fun extract(svg: String): PrintDimensions? {
+                                val documentBuilder = DocumentBuilderFactory.newInstance()
+                                val doc = documentBuilder.newDocumentBuilder().parse(svg.byteInputStream())
+                        
+                                val rootSvgs = RewritingCodeFlavor.xPath.compile("//svg")
+                                val nodes = rootSvgs.evaluate(doc, XPathConstants.NODESET) as NodeList
+                                val svgRoot = nodes.item(0) as Element
+                        
+                                return runCatching<PrintDimensions> {
+                                    val width = svgRoot.getAttribute("width").toInt()
+                                    val height = svgRoot.getAttribute("height").toInt()
+                                    return PrintDimensions(width, height)
+                                }.getOrNull()
+                            }
+                        }
+
+                        @Configuration
+                        class BeanConfiguration { /* ... */
+                            @Bean
+                            fun previewingService(
+                                templatingService: TemplatingService,
+                                svgSizeExtractor: SvgSizeExtractor,
+                                multipleSVGRendererService: MultipleSVGRenderingService,
+                                labelRescaler: LabelRescaler,
+                                templateRepository: SpringTemplateRepository
+                            ): PreviewingService =
+                                CachedPreviewingService(
+                                    LanguagePreviewingService(
+                                        templatingService,
+                                        svgSizeExtractor,
+                                        multipleSVGRendererService,
+                                        labelRescaler
+                                    )
+                                )
+
+                            @Bean
+                            fun svgSizeExtractor() =
+                                SvgSizeExtractorImpl()
+                        }
+
+                </script></code></pre>
+                </section>
+                <section>
+                    <div class="r-stack r-stretch">
+                        <img src="./img/folders-svg.png"/>
+                        <img class="fragment" src="./img/folders-marked-svg.png"/>
+                        <img class="fragment" src="./img/folders-linked-svg.png"/>
+                        <img class="fragment" src="./img/folders-beans-svg.png"/>
+                        <img class="fragment" src="./img/folders-hex-svg.png"/>
+                        <h1 class ="fragment">UML Rulez</h1>
+                    </div>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        - /module/
+                            - /peripherals
+                                - /controllers
+                                - /adapters
+                            - /application/
+                                - /application services
+                                - /ports
+                                - /adapters
+                            - /domain/
+                                - /models
+                                - /ports
+                    </textarea>
+                </section>
+                <section>
+                    <div class="r-stack">
+                        <ul>
+                            <li>🗣 Hexagonal allows you to change databases/libraries/frameworks during development</li>
+                            <li class="fragment">🐂 Who changes databases or frameworks?</li>
+                            <li class="fragment">👨‍🔧 great approach to reusability</li>
+                            <ul>
+                                <li class="fragment">🌐 domain = components and paths of interaction</li>
+                                <li class="fragment">🤵 application services = reusable use cases</li>
+                                <li class="fragment">🔌 peripherals = implementation details</li>
+                            </ul>
+                            <li class="fragment">🧠 separation of concerns = less cognitive load</li>
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h1>Summary</h1>
+                </section>
+                <section>
+                    <div class="r-stack">
+                        <ul>
+                            <li>🧼 Clean Architecture = flexible and recyclable code</li>
+                            <li class="fragment">🐝 Hex Architecture = reusable and ordered code</li>
+                            <li class="fragment">🧠 <u>They both</u> reduce your cognitive load</li>
+                            <li class="fragment">👹 BONUS: You can write encapsulated shit code</li>
+
+                        </ul>
+                    </div>
+                </section>
+                <section>
+                    <h1>Help me create multiorg library</h1>
+                    <h2 class="fragment" style="color: red">We have Axon and DDD</h2>
+                </section>
+                <section>
+                    <h1>Q&A</h1>
+                    <div class="r-stretch reveal-js-qrcode">code</span>
+                </section>
+            </div>
+        </div>
+
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/notes/notes.js"></script>
+        <script src="plugin/markdown/markdown.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+
+        <script>
+            // More info about initialization & config:
+            // - https://revealjs.com/initialization/
+            // - https://revealjs.com/config/
+            Reveal.initialize({
+                hash: true,
+
+                // Learn about plugins: https://revealjs.com/plugins/
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+            });
+        </script>
+        <script src="plugin/reveal.js-qrcode/qrcode.min.js"></script>
+        <script src="plugin/reveal.js-qrcode/index.js"></script>
+    </body>
 </html>
