@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="/dist/reset.css">
+    <link rel="stylesheet" href="/dist/reveal.css">
+    <link rel="stylesheet" href="/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/plugin/highlight/monokai.css">
+    <style>
+        .full-code  {
+
+            }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+                    <textarea data-template>
+                        # Spring Data Rest
+
+
+                        #### By Piotr Suwała
+                    </textarea>
+        </section>
+        <section data-markdown>
+                    <textarea data-template>
+### Features
+- 🗺 Maps your repository into controller
+    - 🧠 Method driven endpoint exposure
+    - 🖇 Yes, even associations!
+- 🏛 Reusable convention
+    - 🕸 HATEOAS out-of-the box
+- ❓ Awkward configurability
+- 🍝 Spaghetti for free (juniors love it!)
+
+
+---
+### Standard use cases
+- 🏫 Bootstrap
+- 💼 Solving Common Use Cases
+    - 📄 Paging and Sorting
+    - 🪃 Actions before or after save
+    - ✅ Validation
+    - 🔨 API/Model Customization
+    - 📜 Querying
+---
+## _Based_ on what?
+
+![use](/img/ss.png)
+---
+## Bootstrapping
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-rest</artifactId>
+</dependency>
+```
+
+```kotlin
+interface SpringTemplateRepository 
+        : PagingAndSortingRepository<Template, Long> {
+}
+```
+
+                    </textarea>
+        </section>
+        <section>
+            <h2>Paging, Sorting for GET</h2>
+            <iframe class="r-stretch" src="http://localhost:8080/swagger-ui/index.html#/template-entity-controller" data-preload>
+            </iframe>
+        </section>
+        <section data-markdown>
+                    <textarea data-template class="r-stretch">
+### Actions Before and After Save
+
+```kotlin
+@RepositoryEventHandler
+class CachedPreviewingService(val previewingService: PreviewingService) : PreviewingService {
+    /* LOT OF CODE */ 
+
+    @HandleAfterCreate
+    fun create(template: Template) {
+        evoke(template)
+    }
+
+    @HandleAfterSave
+    fun evoke(template: Template) {
+        cache.remove(template.id!!)
+    }
+}
+```
+
+
+
+                    </textarea>
+        </section>
+        <section>
+            <h3>Validation</h3>
+            <pre class="r-stretch"><code data-noescape data-line-numbers="1-3|17-32|10-15" class="language-kotlin">
+@Configuration
+class SpringDataRestConfiguration : RepositoryRestConfigurer {
+    override fun configureRepositoryRestConfiguration(
+        config: RepositoryRestConfiguration, cors: CorsRegistry
+    ) {
+        config.exposeIdsFor(Template::class.java)
+    }
+
+    override fun configureValidatingRepositoryEventListener(
+                    validatingListener: ValidatingRepositoryEventListener?
+    ) {
+        validatingListener?
+            .addValidator("beforeCreate", TemplateValidator())
+    }
+
+    class TemplateValidator : Validator {
+        override fun supports(clazz: Class<*>): Boolean =
+            Template::class.java.equals(clazz)
+
+        override fun validate(target: Any, errors: Errors) {
+            val template = target as Template
+
+            if (template.name != null && template.name!!.length < 3)
+                errors.rejectValue("name", "name.too.short")
+
+            DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                .runCatching { parse(template.template.byteInputStream()) }
+                .onFailure {
+                    errors.rejectValue("name", "incorrect.template")
+                }
+        }
+    }
+}
+                    </code></pre>
+        </section>
+        <section>
+            <h3>API and model tuning</h2>
+                <pre class="r-stretch"><code data-noescape data-line-numbers="|30-34|21-24|37-44|5-9"
+                                             class="language-kotlin">
+@Entity
+@Table(name = "templates")
+class Template {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    var id: Long? = null
+
+    @Column(name = "name")
+    @Size(min = 3) // doesn't work
+    var name: String? = null
+
+    @Column(name = "type")
+    var type: TemplateType = TemplateType.SVG
+
+    @Column(name = "template")
+    var template: String = ""
+
+    @Column(name = "created")
+    @JsonProperty(value = "created_at", 
+        access = JsonProperty.Access.READ_ONLY)
+    var created: Date? = null
+
+    @Column(name = "updated")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    var updated: Date? = null
+
+    @PrePersist
+    fun onCreate() {
+        updated = Date()
+        created = Date()
+    }
+}
+
+@Configuration
+class SpringDataRestConfiguration : RepositoryRestConfigurer {
+    override fun configureRepositoryRestConfiguration(
+        config: RepositoryRestConfiguration, cors: CorsRegistry
+    ) {
+        config.exposeIdsFor(Template::class.java)
+    }
+}
+                    </code></pre>
+        </section>
+        <section data-markdown>
+                    <textarea data-template>
+## Enabling Search
+```kotlin
+interface SpringTemplateRepository
+       : PagingAndSortingRepository<Template, Long> {
+    fun findAllByNameContaining(
+                        name: String,
+                        paging: Pageable    
+                    ): Page<Template>
+}
+```
+
+                    </textarea>
+        </section>
+        <section>
+            <h2>Querying</h2>
+            <iframe class="r-stretch"
+                    src="http://localhost:8080/swagger-ui/index.html#/template-search-controller/executeSearch-template-get">
+            </iframe>
+        </section>
+        <section>
+            <h2>Alternative</h2>
+        </section>
+        <section>
+            <h3>CRUD but nicely</h3>
+                <pre class="r-stretch full-code"><code data-noescape data-line-numbers="56-63|6-18|20-27|29-44|46-51"
+                                             class="language-kotlin">
+@RestController
+@RequestMapping(path = ["/api/new/templates"])
+class TemplateController(val templateRepository: SpringTemplateRepository) {
+
+    @PostMapping
+    @Transactional
+    fun create(
+        @Valid @RequestBody templateCreateDTO: TemplateCreateDTO
+    ) {
+        templateRepository.save(
+            Template.create(
+                templateCreateDTO.name,
+                templateCreateDTO.type,
+                templateCreateDTO.contents
+            )
+        )
+    }
+
+    @GetMapping
+    @Transactional
+    fun retrieve(
+        @PageableDefault(size = 50) paging: Pageable, 
+        @PathVariable name: String
+    ): List =
+        templateRepository
+            .findAllByNameContaining(name, paging).toList()
+
+    @PutMapping(path = ["/{id}"])
+    @Transactional
+    fun update(
+        @PathVariable id: Long, 
+        @Valid @RequestBody templateCreateDTO: TemplateCreateDTO
+    ) {
+        templateRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException() }
+            .apply {
+                name = templateCreateDTO.name
+                type = templateCreateDTO.type
+                template = templateCreateDTO.contents
+            }.also {
+                templateRepository.save(it)
+            }
+    }
+
+    @DeleteMapping(path = ["/{id}"])
+    @Transactional
+    fun delete(@PathVariable id: Long) =
+        templateRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException() }
+            .also { templateRepository.delete(it) }
+
+
+}
+
+data class TemplateCreateDTO(
+    val name: String,
+
+    val type: Template.TemplateType,
+
+    @field:ValidXml(message = "SVG file is invalid bruh")
+    val contents: String
+);
+
+                    </code></pre>
+        </section>
+        <section>
+            <h2>But is it a correct CRUD?</h2>
+            <iframe class="r-stretch"
+                    src="http://localhost:8080/swagger-ui/index.html#/template-controller">
+            </iframe>
+        </section>
+        <section data-markdown>
+                    <textarea data-template>
+### Ayes&Nays
+- 💕 Ayes 
+    - 🪃 Easy reusable and complete convention
+    - ⏩ CRUD creation accelerated
+    - 🚸 Juniors can't screw it up
+    - 🧓 Seniors happy 'cause no boilerplate
+- 💔 Nays
+    - 🪢 Entangled API/Model/View Model
+    - 🏗 Hard to fit into existing architecture
+    - 💢 Awkward decoupled Spring Magi©
+    - 🍝 Seniors sad 'cause spaghetti by design
+
+                    </textarea>
+        </section>
+        <section data-markdown>
+                    <textarea data-template>
+### Code Debt is calling you. Answer?
+- 👰 Marry it 
+    - 🧒 Junior teams
+    - 🏃 Startups and Experiments
+    - 📚 Read Models?
+- 🔫 Kill it
+    - ♨ Application with set convention
+    - 📖 Understanding > Speed
+- 🛌 Fuck it,
+    - you can always refactor code, **later** 
+
+---
+# QA
+
+![hlex](/img/hlex.png)
+---
+# Merci
+
+
+
+                    </textarea>
+        </section>
+        
+
+    </div>
+
+    <script src="/dist/reveal.js"></script>
+    <script src="/plugin/notes/notes.js"></script>
+    <script src="/plugin/markdown/markdown.js"></script>
+    <script src="/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+    <script src="/plugin/reveal.js-qrcode/qrcode.min.js"></script>
+    <script src="/plugin/reveal.js-qrcode/index.js"></script>
+</body>
+</html>
