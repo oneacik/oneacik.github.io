@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="/dist/reset.css">
+    <link rel="stylesheet" href="/dist/reveal.css">
+    <link rel="stylesheet" href="/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/plugin/highlight/monokai.css">
+    <style>
+        .full-code  {
+
+            }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+                    <textarea data-template>
+                        # Lean Coffee
+
+                        #### By Piotr Suwała
+                        ---
+                        ## Step 1
+                        1. Division into groups of 5-8 people [5min]
+                        ---
+                        ## Step 2
+                        1. Choosing topics [15min]
+                            1. Each person proposes a topic as a sticky note
+                            1. Similar topics are merged
+                            1. Everyone has 3 dots to vote
+                            1. 3 topics with the highest number of votes win
+                        ---
+                        ## Step 3
+                        1. Each team shares topics of their choosings [2min/team]
+                        ---
+                        ## Step 4
+                        1. Talks [60min]
+                            1. Topic is being conducted for 20 minutes
+                            2. (People may make notes on sticky notes, doodling, etc.)
+                            3. After topic: People can move to other tables (but limit per station should be preserved)
+                            4. The next topic gets addressed
+                        ---
+                        ## Step 5
+                        1. Each person shares what was the most impactful for him during the lean coffee
+                    </textarea>
+        </section>
+    </div>
+
+    <script src="/dist/reveal.js"></script>
+    <script src="/plugin/notes/notes.js"></script>
+    <script src="/plugin/markdown/markdown.js"></script>
+    <script src="/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+    <script src="/plugin/reveal.js-qrcode/qrcode.min.js"></script>
+    <script src="/plugin/reveal.js-qrcode/index.js"></script>
+</body>
+</html>
