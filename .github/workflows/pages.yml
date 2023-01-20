@@ -5,15 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: remove actions 
-        run:  rm -rf .github
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: '.'
-          destination-github-username: 'oneacik'
-          destination-repository-name: 'oneacik.github.io'
-          target-branch: master
+      - name: WE GO
+        run: | 
+          rm -rf .github
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          ssh-add - <<< "${{ secrets.SSH_DEPLOY_KEY }}"
+          git commit -a -m "rekt actions"
+          git push git@github.com:oneacik/oneacik.github.io.git master --force
