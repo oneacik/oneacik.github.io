@@ -5,11 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: WE GO
         run: | 
           rm -rf .github
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          ssh-add - <<< "${{ secrets.SSH_DEPLOY_KEY }}"
           git commit -a -m "rekt actions"
-          git push git@github.com:oneacik/oneacik.github.io.git master --force
+          mkdir -p ~/.ssh/ 
+          cat <<< "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          git push "git@github.com:oneacik/oneacik.github.io.git" master --force 
