@@ -6,6 +6,8 @@ const colors = require('colors')
 const through = require('through2');
 const qunit = require('node-qunit-puppeteer')
 
+const fs = require('fs');
+
 const {rollup} = require('rollup')
 const {terser} = require('rollup-plugin-terser')
 const babel = require('@rollup/plugin-babel').default
@@ -21,6 +23,9 @@ const eslint = require('gulp-eslint')
 const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
+const template = require('gulp-template');
+const data = require('gulp-data');
+ 
 
 const root = yargs.argv.root || '.'
 const port = yargs.argv.port || 8000
@@ -69,6 +74,15 @@ babelConfigESM.presets[0][1].targets = { browsers: [
 ] };
 
 let cache = {};
+
+
+gulp.task('generate', () =>
+    gulp.src('src/index.html')
+        .pipe(data(() => ({folders: fs.readdirSync("presentations").filter(x=> (x!="index.html")) })))
+        .pipe(template())
+        .pipe(gulp.dest('presentations'))
+);
+
 
 // Creates a bundle with broad browser support, exposed
 // as UMD
@@ -267,7 +281,7 @@ gulp.task('test', gulp.series( 'eslint', 'qunit' ))
 
 gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins'), 'test'))
 
-gulp.task('build', gulp.parallel('js', 'css', 'plugins'))
+gulp.task('build', gulp.parallel('generate', 'js', 'css', 'plugins'))
 
 gulp.task('package', gulp.series(() =>
 
@@ -290,7 +304,6 @@ gulp.task('reload', () => gulp.src(['**/*.html', '**/*.md'])
     .pipe(connect.reload()));
 
 gulp.task('serve', () => {
-
     connect.server({
         root: root,
         port: port,
@@ -298,7 +311,9 @@ gulp.task('serve', () => {
         livereload: true
     })
 
-    gulp.watch(['**/*.html', '**/*.md'], gulp.series('reload'))
+    gulp.watch(["src/*.html"], gulp.series('generate'))
+
+    gulp.watch(['**/*.html', '**/*.md'], gulp.series('generate'))
 
     gulp.watch(['js/**'], gulp.series('js', 'reload', 'eslint'))
 
