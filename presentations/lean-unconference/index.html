@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="/dist/reset.css">
+    <link rel="stylesheet" href="/dist/reveal.css">
+    <link rel="stylesheet" href="/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/plugin/highlight/monokai.css">
+    <style>
+        .full-code  {
+
+            }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+                    <textarea data-template>
+                        # Lean Unconference 
+
+                        #### By Piotr Suwała
+                        ---
+                        ## Agenda
+
+                        1. ⛏ Choosing a topic
+                        1. 🧑‍🤝‍🧑 Division into groups
+                        1. 🤼 Proceeding with one topic (1h)
+                        1. 🗣 Sales pitch and sharing
+                        ---
+                        ## Step 1 - Implementation 10/25
+
+                        1. 🃏 Each of us writes his idea on sticky note
+                        1. ➰ Process is repeated 5 times
+                            1. 🔔 You randomly switch cards until a signal
+                            1. 🎓 In a pair You grade the idea 0-5
+                        1. 📋 At the end we calculate final score
+                        1. 🥇 Highest scores go to the next stage
+                        ---
+                        ## Step 2
+                        1. Ideas are sticked to the board
+                        1. Next to the ideas participants write their names on notes
+                        1. We remove the topics that don't get minimum of 5 ppl
+                        ---
+                        ## Step 3
+                        1. Talk for 1 hour
+                        1. Use sticky notes to preserve the knowledge
+                            1. Using Problem/Solution
+                            1. Using Mindmap
+                            1. Or something else
+                        1. **You can change the group during the discussion**
+                        ---
+                        ![](/img/lean/ProblemSolution.png)
+                        ---
+                        ![](/img/lean/Mindmap.png)
+                        ---
+                        ## Step 4 - Sales Pitch
+                        1. Try to sell your table to other participants
+                            1. Share what topics and subtopics you crawled into
+                            1. Share what you have learned
+                            1. Share what can be read from sticky notes
+                    </textarea>
+        </section>
+    </div>
+
+    <script src="/dist/reveal.js"></script>
+    <script src="/plugin/notes/notes.js"></script>
+    <script src="/plugin/markdown/markdown.js"></script>
+    <script src="/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+    <script src="/plugin/reveal.js-qrcode/qrcode.min.js"></script>
+    <script src="/plugin/reveal.js-qrcode/index.js"></script>
+</body>
+</html>
