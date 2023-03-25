@@ -109,11 +109,11 @@
                         <img class="fragment" style="width:80%" src="/img/bob.jpg"/>
                         <img class="fragment" style="width:50%" src="/img/cleanbook.jpg"/>
                         <img class="fragment" style="width:70%" src="/img/elastic.png"/>
-                        <img class="fragment" style="width:60%" src="/img/succ.png"/>
+                        <img class="fragment" style="width:70%" src="/img/hlexan/toolbox.png"/>
                     </div>
                 </section>
                 <section>
-                    <h1>Let's Reduce:<br/><span class="fragment" style="color: red">Clean Architecture = SOLID, Interfaces, Factories</span></h1>
+                    <h1>Let's Be Tactical:<br/><span class="fragment" style="color: red">Clean Architecture = SOLID, Interfaces, Factories</span></h1>
                 </section>
                 <section>
                     <pre class="r-stretch"><code data-noescape data-line-numbers="2-16|11-16|10-17|20-30|24-24|23-28|22-29">
@@ -240,12 +240,71 @@
                     <h2>Hexagonal Architecture <br/><span class="fragment" style="color:red">or Ports & Adapters</span></h1>
                 </section>
                 <section>
+                    <img src="/img/hlexan/hexone.png"/>
+                </section>
+                <section>
+                    <pre class="r-stretch"><code class="language-kotlin" data-trim data-noescape data-line-numbers="1-9|12-24|27-49" ><script type="text/template">
+class MockTemplateService : TemplateService {
+    override fun render(templateContents: String, fields: Map<String, String>): String {
+        return templateContents
+    }
+
+    override fun listFields(templateContents: String): Set<String> {
+        return listOf("mock").toSet()
+    }
+}
+
+
+class SimpleTemplateService : TemplateService {
+    val variableRegex = Regex("""\{\{([a-zA-Z0-9]+)\}\}""")
+    override fun render(templateContents: String, fields: Map<String, String>): String =
+        variableRegex.replace(templateContents) { match ->
+            fields.getOrDefault(
+                match.groups[1]!!.value,
+                match.groups[1]!!.value
+            )
+        }
+
+    override fun listFields(templateContents: String): Set<String> =
+        variableRegex.findAll(templateContents).toSet().map { it.groups[1]!!.value }.toSet()
+}
+
+// AM I RETARDED TO USE THIS SHIT?
+class JinjaTemplateService(val jinjava: Jinjava = Jinjava()) : TemplateService {
+    override fun render(templateContents: String, fields: Map<String, String>): String {
+        synchronized(this) {
+            jinjava.globalContext
+                .setDynamicVariableResolver {
+                    it
+                }
+
+            return jinjava.render(templateContents, fields)
+        }
+    }
+
+    override fun listFields(templateContents: String): Set<String> {
+        synchronized(this) {
+            val list = mutableListOf<String>()
+
+            jinjava.globalContext
+                .setDynamicVariableResolver { list.add(it) }
+
+            jinjava.render(templateContents, null)
+
+            return list.toSet()
+        }
+    }
+}
+
+                    </script></code></pre>
+                </section>
+                <section>
                     <ul>
                         <li>🥯 How to Bake Hex</li>
                         <li class="fragment">🥞 Three Layers:</li>
                         <ol>
                             <li class="fragment">🌐 Domain: Business Rules</li>
-                            <li class="fragment">🤵 Application Services: Use Cases</li>
+                            <li class="fragment">🤵 Application: Use Cases</li>
                             <li class="fragment">🔌 Peripherals: Outside World Connectors</li>
                         </ol>
                         <li class="fragment">⬇ Layer knows only about layer below</li>
@@ -470,14 +529,52 @@ data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
                 </script></code></pre>
                 </section>
                 <section>
-                    <div class="r-stack r-stretch">
-                        <img src="/img/folders-svg.png"/>
-                        <img class="fragment" src="/img/folders-marked-svg.png"/>
-                        <img class="fragment" src="/img/folders-linked-svg.png"/>
-                        <img class="fragment" src="/img/folders-beans-svg.png"/>
-                        <img class="fragment" src="/img/folders-hex-svg.png"/>
-                        <h1 class ="fragment">UML Rulez</h1>
-                    </div>
+                    <h1>Testing?</h1>
+                    <h2 class="fragment">Selective Mockability</h2>
+                </section>
+
+                <section>
+                    <pre class="r-stretch"><code class="language-kotlin" data-trim data-noescape data-line-numbers="9-26|1-7" ><script type="text/template">
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class PrintingIntegrationTest {
+    @Autowired
+    lateinit var rest: TestRestTemplate;
+
+    @MockBean // So the test will work even if you ain't have printer defined
+    lateinit var printerService: LanguagePrinterService
+
+    @Test
+    fun whenTemplateIsAddedAndPrintedThenSucceeds() {
+        val template = createTemplate()
+
+        val templateResponse =
+            rest.postForEntity("/api/templates", template, IdOnly::class.java, emptyMap<String, String>())
+        val id = templateResponse.body!!.id
+        Assertions.assertEquals(HttpStatus.CREATED, templateResponse.statusCode)
+
+        val printingResponse =
+            rest.postForEntity(
+                "/api/templates/${id}/print",
+                PrintDTO(emptyMap()),
+                Nothing::class.java,
+                emptyMap<String, String>()
+            )
+        Assertions.assertEquals(HttpStatus.OK, printingResponse.statusCode)
+    }
+
+    fun createTemplate(): Template {
+        val template = Template()
+        template.name = "Something"
+        template.type = Template.TemplateType.SVG
+        template.template =
+            this.javaClass.getResource("320x224.svg").openStream().bufferedReader()
+                .use(BufferedReader::readText)
+        return template
+    }
+
+    data class IdOnly(val id: Long);
+}
+                    </script></code></pre>
                 </section>
                 <section data-markdown>
                     <textarea data-template>
@@ -499,6 +596,7 @@ data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
                         <ul>
                             <li>🗣 Hexagonal allows you to change databases/libraries/frameworks during development</li>
                             <li class="fragment">🐂 Who changes databases or frameworks?</li>
+                            <li class="fragment">🧪 Great testability and speed of iteration</li>
                             <li class="fragment">👨‍🔧 great approach to reusability</li>
                             <ul>
                                 <li class="fragment">🌐 domain = components and paths of interaction</li>
@@ -506,7 +604,7 @@ data class PrintDimensions(val xInPixels: Int, val yInPixel: Int) {
                                 <li class="fragment">🔌 peripherals = implementation details</li>
                             </ul>
                             <li class="fragment">🧠 separation of concerns = less cognitive load</li>
-                            <li class="fragment">🟣 Hex is example of Clean Architecture</li>
+                            <li class="fragment">🟣 Hex is implementation of Clean Architecture</li>
                         </ul>
                     </div>
                 </section>
