@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="/dist/reset.css">
+    <link rel="stylesheet" href="/dist/reveal.css">
+    <link rel="stylesheet" href="/dist/theme/white.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/plugin/highlight/monokai.css">
+    <style>
+        :root {
+            --r-main-font-size: 32px
+        }
+
+        .small-imgs > img {
+            height: 8rem;
+            margin: 2rem;
+        }
+
+        section.full-img {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        section.full-img img {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+            ## Functional Spring made simple
+
+            #### Manifest przeciwko adnotacjom w tym @Transactional
+        </section>
+        <section data-markdown>
+            ## Nienawidzę Złożoności
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/cynefin.jpg">
+        </section>
+        <section data-markdown>
+            # Ale czemu my o złożoności dzisiaj?
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/ptak.jpg">
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/jug.png">
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/mongo.webp">
+        </section>
+        <section data-markdown>
+            # Do KODU
+
+            ## :(){ :|:& };:
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/cat1.jpg">
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/cat2.png">
+        </section>
+        <section class="full-img">
+            <img src="/img/sfunc/cat3.jpg">
+        </section>
+        <section>
+            <h1>Grzechy Frameworków</h1>
+
+            <ol>
+                <li class="fragment">Myślisz, że będzie działać - nie będzie</li>
+                <li class="fragment">Nie będzie działać nawet po przeczytaniu dokumentacji</li>
+                <li class="fragment">Nawet testy mogą Cię nie uratować</li>
+            </ol>
+            <p class="fragment">To nie Twoja wina!</p>
+        </section>
+        <section>
+            <h1>A my</h1>
+            <ol>
+                <li>Jesteśmy zwykłymi chłopakami z <strike>blokowisk</strike> JVMa</li>
+                <li class="fragment">Chcemy by rzeczy działały</li>
+                <li class="fragment">Chcemy kończyć pracę o 16</li>
+            </ol>
+            <p class="fragment">i iść robić prezentacje na Tech3Camp</p>
+        </section>
+        <section data-markdown>
+            # Więc
+
+            ## Ograniczajmy magię!
+
+            ### W tym adnotacje / proxy / aspekty
+        </section>
+        <section data-markdown>
+            # Do kodu
+
+            ## FUNKCYJNEGO
+
+            ![LISP](/img/sfunc/lisp.jpg)
+        </section>
+        <section>
+            <h1>Pisząc funkcyjnie</h1>
+
+            <ol>
+                <li class="fragment">Wiesz, że coś się wykona</li>
+                <li class="fragment">Kontroluje cię system typów</li>
+                <li class="fragment">Łatwiej znajdziesz kod, który się wykonuje</li>
+                <li class="fragment">Kod się dobrze składa i łatwo go ponownie użyć</li>
+                <li class="fragment">Da się łatwo naginać springa do swoich potrzeb</li>
+            </ol>
+            <p class="fragment">"Fajny, co?" - O kodzie funkcyjnym: Julian Tuwim</p>
+        </section>
+        <section data-markdown>
+            # Bonus: Jak działa transakcja w springu
+        </section>
+        <section data-markdown>
+            # Bonus: Co mieszka na produkcji?
+        </section>
+        <section data-markdown>
+            ## Coś o mnie na koniec
+
+            # Piotr Suwała
+            - Architekt w Kinguinie
+            - Konfy / JUG / DDD-GDA - Prezki / Facylitacja / Lean Coffee
+            - Projekciki w Hackerspace Pomorze
+        </section>
+        <section class="full-img">
+            <h3>Dzięki / Wszystko & Reszta</h3>
+            <img src="/img/sfunc/qrcode.png">
+        </section>
+    </div>
+</div>
+
+<script src="/dist/reveal.js"></script>
+<script src="/plugin/notes/notes.js"></script>
+<script src="/plugin/markdown/markdown.js"></script>
+<script src="/plugin/highlight/highlight.js"></script>
+
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+<script src="/plugin/reveal.js-qrcode/qrcode.min.js"></script>
+<script src="/plugin/reveal.js-qrcode/index.js"></script>
+</body>
+</html>
