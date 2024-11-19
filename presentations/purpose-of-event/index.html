@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="/dist/reset.css">
+    <link rel="stylesheet" href="/dist/reveal.css">
+    <link rel="stylesheet" href="/dist/theme/black.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="/plugin/highlight/monokai.css">
+    <style>
+img {
+    margin: 10px;
+} 
+    </style>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+                    <textarea data-template>
+                        ---
+                        # Dlaczego tutaj jesteś?
+                        ---
+                        ## Jakie są Twoje oczekiwania
+                        ## Co chcesz osiągnąć?
+                        ## Czy Będzie Warto?
+                        ---
+                        ![](/img/gathering/marbla.png) 
+                        ---
+                        *Zdjęcie Kawalerskiego*
+                        ---
+                        *Zdjęcie Art Of Gathering*
+                        ---
+                        - Konferencja A
+                        - Konferencja B
+                        ---
+                        *Zdjęcie Konferencji A*
+                        ---
+                        *Zdjęcie Konferencji B*
+                        ---
+                        *Zdjęcie Konferencji A*
+                        ---
+                        *TrojQA*
+                        ---
+                        *Liberating Structures*
+                        ---
+                        *Znowu najazd na klub książkowy*
+                        ---
+                        *Zdjęcie Organizatorów*
+                        ---
+                        *Zdjęcie Publiczności*
+                    </textarea>
+        </section>
+    </div>
+
+    <script src="/dist/reveal.js"></script>
+    <script src="/plugin/notes/notes.js"></script>
+    <script src="/plugin/markdown/markdown.js"></script>
+    <script src="/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+    <script src="/plugin/reveal.js-qrcode/qrcode.min.js"></script>
+    <script src="/plugin/reveal.js-qrcode/index.js"></script>
+</body>
+</html>
